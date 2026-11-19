@@ -1309,7 +1309,7 @@ body {
   justify-content: space-around;
   z-index: 5
 }
-.bottom-nav button {
+.bottom-nav a {
   border: 0;
   background: none;
   color: var(--color-text-secondary);
@@ -1320,7 +1320,7 @@ body {
   font-size: 9px;
   min-width: 60px
 }
-.bottom-nav button.active {
+.bottom-nav a.active {
   color: var(--color-accent)
 }
 .mobile-add {
@@ -1607,7 +1607,7 @@ button:disabled {
   padding: 18px;
   color: var(--muted)
 }
-.bottom-nav button {
+.bottom-nav a {
   min-width: 0
 }
 .profile-editor .checkbox {
@@ -2017,7 +2017,7 @@ body:has(.public-entry) {
 .bottom-nav {
   overflow-x: auto
 }
-.bottom-nav button {
+.bottom-nav a {
   flex: 1;
   min-width: 42px
 }/* Hierarquia e estados partilhados por todas as paginas. */
@@ -2081,7 +2081,7 @@ body {
   background: var(--color-accent-soft);
   color: var(--color-accent);
 }
-.bottom-nav button.active {
+.bottom-nav a.active {
   color: var(--color-accent);
   background: var(--color-accent-soft);
 }
@@ -2168,3 +2168,18 @@ button:disabled {
 .dot, .lime-dot, .chart-legend span { background: var(--color-accent); }
 .nav-item i { background: var(--color-accent-soft); color: var(--color-accent); }
 :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
+
+/* Navegacao e camadas: a decoracao nunca recebe cliques ou toques. */
+.pointer-events-none, .hero-big, .event-art, .toast { pointer-events: none; }
+.landing-hero { isolation: isolate; }
+.hero-big, .event-art { z-index: 0; user-select: none; }
+.hero-buttons { position: relative; z-index: 1; flex-wrap: wrap; }
+:where(.primary, .outline, .text-link, .nav-item, .side-user, .top-avatar, .bottom-nav a) { text-decoration: none; }
+.outline { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+@media (max-width: 760px) {
+  body { padding-bottom: calc(152px + env(safe-area-inset-bottom, 0px)); }
+  .bottom-nav { height: calc(64px + env(safe-area-inset-bottom, 0px)); padding-bottom: env(safe-area-inset-bottom, 0px); }
+  .mobile-add { bottom: calc(80px + env(safe-area-inset-bottom, 0px)); }
+  button, .primary, .outline, .text-link { min-height: 44px; }
+  .bottom-nav a { flex: 1 0 42px; min-height: 44px; }
+}

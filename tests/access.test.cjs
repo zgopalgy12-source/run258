@@ -29,7 +29,11 @@ test('renewed cookies are preserved in both forwarded requests and login redirec
  assert.equal(request.cookies.get('sb-test').value,'renewed');assert.equal(response.cookies.get('sb-test').value,'renewed');
 });
 test('authenticated middleware passes private requests and makes them non-cacheable',async()=>{
- const guard=middlewareMock(authorized);const response=await guard.middleware(new NextRequest('https://run258.test/painel'));assert.equal(response.status,200);assert.equal(response.headers.get('location'),null);assert.match(response.headers.get('cache-control'),/private, no-store/);
+ const guard=middlewareMock(authorized);
+ for(const path of ['/painel','/chat'])for(const headers of [{},{rsc:'1','next-router-prefetch':'1'}]){
+  const response=await guard.middleware(new NextRequest('https://run258.test'+path,{headers}));
+  assert.equal(response.status,200,path);assert.equal(response.headers.get('location'),null,path);assert.match(response.headers.get('cache-control'),/private, no-store/);
+ }
 });
 test('network failures and missing config fail closed, while entry remains available',async()=>{
  const broken=middlewareMock(()=>{throw Error('network')});assert.equal((await broken.middleware(new NextRequest('https://run258.test/admin'))).status,307);
