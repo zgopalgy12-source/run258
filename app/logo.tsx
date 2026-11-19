@@ -1,0 +1,1 @@
+export function Logo(){return <div className="logo"><div className="logo-mark">R<span>◕</span>N<small>258</small></div><div className="logo-copy">RUN <b>258</b><small>MAPUTO RUN CLUB</small></div></div>}
